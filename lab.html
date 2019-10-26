@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jQuery Event Handling Assignment</title>
+    <script src = "node_modules/jquery/dist/jquery.js"></script>
+    <script>
+    $(function(){
+        
+        // Q16. Set Click method
+        $('#button1').click(function(){
+            window.alert("Button has been clicked!");
+        });
+
+        // Q17. Set Bind method
+        $('#button2').bind('click',function(){
+            window.alert("Button has been clicked!");
+        });
+
+        // Q18. Set On method
+        $('#button3').on('click',function(){
+            window.alert("Button has been clicked!");
+        });
+
+        // Q19. Literal Notation Method
+        $('body').on({
+            click: function(){
+                window.alert("Button has been clicked!");
+            }
+        }, '#button4');
+
+        /*******************************************************/
+        // Q20. Displaying click,mouseenter and mouseleave events on div tag
+        $('#div1').width('400px').height('400px')
+                .click(function(){
+                
+                    window.alert("Mouse has clicked the div!");
+            
+                    $('#div1').mouseenter(function(){
+                        window.alert("Mouse has entered the div!");
+                    });
+                    
+                    $('#div1').mouseenter(function(){
+                        window.alert("Mouse has left the div!");
+                    });
+                });
+        
+        /*******************************************************/
+        // Q21. Displaying mouseenter,mouseleave,click event in span tag
+        $('#div2').on({
+                mouseenter: function(){
+                    $('#span1').text("Mouse has entered the div!");
+                },
+                mouseleave: function(){
+                    $('#span1').text("Mouse has left the div!");
+                },
+                click: function(){
+                    $('#span1').text("Mouse has clicked the div!");
+                }
+        });
+        
+        /*******************************************************/
+        //  Q22. Prevent link from redirecting to that web site
+        $('a').click(function(event){
+                event.preventDefault();
+                $(this).css('color','red');
+                window.alert(event.target.nodeName + " triggered the event.")    
+            });
+
+        /*******************************************************/
+        // Q23. Displaying width and height of browser window
+        $(window).resize(function(){
+            $('#div3').text($(window).width() + ' ' + $(window).height());
+        });
+
+        /*******************************************************/
+        // Q24. Focusing input text field
+        $('#input1').on({
+            focus: function(){
+                    $('#input1').css('background-color','lightgray');
+            },
+            focusout: function(){
+                    $('#input1').css('background-color','white');
+            }
+        });
+        
+        /*******************************************************/
+        // Q25. Styling 2 input fields in form tag.
+        // Set the focus on Name TextBox
+        $('#for_name').focus();
+
+        // The handler for the click event of a submit button     
+        $('#email_form').submit(function(event){
+            var isValid = true;
+
+            // Validate Name field
+            var name = $('#for_name').val();
+            if (name == ""){
+                window.alert('Name is required.');
+                $('#for_name').css('border','solid red 1px');
+                isValid = false;
+            }else {
+                $('#for_name').next().text('');
+            }
+            $('for_name').val(name);
+
+            // Validate Email field
+            var emailPattern = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}\b/;
+            var email = $('#for_email').val();
+            if (email == ""){
+                window.alert('Email is required.');
+                $('#for_email').css('border','solid red 1px');
+                isValid = false;
+            } else if ( !emailPattern.test(email) ) {
+                $("#for_email").next().text("Must be a valid email address.");
+                $('#for_email').css('border','solid red 1px');
+                isValid = false;
+            } else{
+                $('#for_email').next().text('');
+            }
+            $('#for_email').val(email);
+
+            if (isValid == false){
+                event.preventDefault();
+            } else{
+               $('#for_name, #for_email').css('border', 'solid green 1px');
+            }
+        });
+
+    
+    });
+    </script>
+</head>
+<body>
+
+
+    <!-- Q16. Button for .click()-->
+    <button id="button1">Click Me First</button><br>
+
+    <!-- Q17. Button for .bind()-->
+    <button id="button2">Click Me Second</button><br>
+
+    <!-- Q18. Button for .on()-->
+    <button id="button3">Click Me Third</button><br>
+
+    <!-- Q19. Button for literal notation-->
+    <button id="button4">Click Me Fourth</button>
+    <button id="button4">Click Me Too</button><br><br>
+
+    <!-- Q20. Create div tag to alert click,mouseenter and mouseleave events-->
+    <div id='div1'>This is first div tag.</div><br>
+
+    <!-- Q21. Create div tag to display click,mouseenter and mouseleave events in <span> tag-->
+    <div id='div2'>This is second div tag.</div>
+    <span id ='span1'></span><br><br>
+    
+    <!--Q22. Creating link within the web page and set it’s href attribute to browse to modulemedia.com-->
+    <a href = "modulemedia.com" id='clicked'>Module Media</a><br><br>
+
+    <!-- Q23. Creating div tag and displaying width and height of browser window-->
+    <div id="div3"></div><br><br>
+    
+    <!--Q24. Creating input tag for setting focus -->
+    <input type='text' id='input1'><br><br>
+
+    <!--Q25. Creating form tag with two input fields - name and email-->
+    <form id="email_form" name="email_form" action="join.html" method="get">
+        <label for="for_name" >Name : </label>
+        <input type="text"  id="for_name"  name ="for_name">
+        <span></span><br>
+
+        <label for="for_email">Email : </label>
+        <input type="text"  id="for_email"  name ="for_email">
+        <span></span><br>
+
+        <input type="submit" id="submit" name="submit" value="Submit">
+    </form>
+</body>
+</html>
